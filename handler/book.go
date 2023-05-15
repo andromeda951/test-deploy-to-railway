@@ -40,7 +40,11 @@ func (h *bookHandler) GetBooks(ctx *gin.Context) {
 
 func convertToBookResponse(b book.Book) book.BookResponse {
 	return book.BookResponse{
-		ID:    b.Id,
-		Title: b.Title,
+		ID:          b.ID,
+		Title:       b.Title,
+		Description: b.Description,
+		Price:       b.Price,
+		Rating:      b.Rating,
+		Discount:    b.Discount,
 	}
 }

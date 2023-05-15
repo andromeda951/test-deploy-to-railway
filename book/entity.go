@@ -3,7 +3,12 @@ package book
 import "time"
 
 type Book struct {
-	Id        int
-	Title     string
-	CreatedAt time.Time
+	ID          int
+	Title       string
+	Description string
+	Price       int
+	Rating      int
+	Discount    int
+	CreatedAt   time.Time
+	UpdateAt    time.Time
 }
