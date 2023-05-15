@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 	"test-deploy-to-railway/book"
+	"test-deploy-to-railway/handler"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -27,15 +28,21 @@ func main() {
 
 	db.AutoMigrate(&book.Book{}) // create books table
 
+	bookRepository := book.NewRepository(db)
+	bookService := book.NewService(bookRepository)
+	bookHandler := handler.NewBookHandler(bookService)
+
 	router := gin.Default()
 
 	router.GET("/", rootHandler)
 	router.GET("/hello", helloHandler)
+	router.GET("/books", bookHandler.GetBooks)
 
 	port := os.Getenv("PORT")
 	router.Run(":" + port)
 }
 
+// Test Handler
 func rootHandler(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{
 		"name": "Andromeda",
